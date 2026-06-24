@@ -34,7 +34,7 @@ export function NoteEditor({ note, projects, isOwner, onUpdate, onConvertLineToT
         value={note.title}
         onChange={(e) => isOwner && onUpdate(note.id, { title: e.target.value })}
         disabled={!isOwner}
-        className="w-full text-xl font-bold bg-transparent text-zinc-100 outline-none disabled:cursor-default"
+        className="w-full text-xl font-bold bg-transparent text-[#1a1d2e] outline-none disabled:cursor-default"
         placeholder="Note title..."
       />
 
@@ -43,19 +43,17 @@ export function NoteEditor({ note, projects, isOwner, onUpdate, onConvertLineToT
           value={note.projectId ?? ''}
           onChange={(e) => isOwner && onUpdate(note.id, { projectId: e.target.value || null })}
           disabled={!isOwner}
-          className="px-3 py-1.5 bg-zinc-800 border border-zinc-700 rounded-lg text-xs text-zinc-300 outline-none disabled:opacity-60"
+          className="px-3 py-2 bg-[#f8f9fc] border border-[#e2e5ef] rounded-xl text-xs text-[#1a1d2e] outline-none disabled:opacity-60"
         >
           <option value="">No project</option>
-          {projects.map((p) => (
-            <option key={p.id} value={p.id}>{p.name}</option>
-          ))}
+          {projects.map((p) => <option key={p.id} value={p.id}>{p.name}</option>)}
         </select>
 
         <select
           value={note.type}
           onChange={(e) => isOwner && onUpdate(note.id, { type: e.target.value as 'note' | 'meeting' })}
           disabled={!isOwner}
-          className="px-3 py-1.5 bg-zinc-800 border border-zinc-700 rounded-lg text-xs text-zinc-300 outline-none disabled:opacity-60"
+          className="px-3 py-2 bg-[#f8f9fc] border border-[#e2e5ef] rounded-xl text-xs text-[#1a1d2e] outline-none disabled:opacity-60"
         >
           <option value="note">Note</option>
           <option value="meeting">Meeting</option>
@@ -64,7 +62,7 @@ export function NoteEditor({ note, projects, isOwner, onUpdate, onConvertLineToT
         {isOwner && (
           <button
             onClick={handleConvertLine}
-            className="flex items-center gap-1 px-3 py-1.5 text-xs text-zinc-500 hover:text-indigo-400 bg-zinc-800 rounded-lg transition-colors"
+            className="flex items-center gap-1 px-3 py-2 text-xs text-[#6b7194] hover:text-[#6c5ce7] bg-[#f8f9fc] rounded-xl transition-colors border border-[#e2e5ef]"
             title="Select text in the body, then click to convert to task"
           >
             <ArrowRight className="w-3 h-3" />
@@ -73,18 +71,10 @@ export function NoteEditor({ note, projects, isOwner, onUpdate, onConvertLineToT
         )}
       </div>
 
-      <TagInput
-        tags={note.tags}
-        onChange={(tags) => isOwner && onUpdate(note.id, { tags })}
-        disabled={!isOwner}
-      />
+      <TagInput tags={note.tags} onChange={(tags) => isOwner && onUpdate(note.id, { tags })} disabled={!isOwner} />
 
       {note.type === 'meeting' && (
-        <MeetingFields
-          note={note}
-          isOwner={isOwner}
-          onUpdate={(updates) => onUpdate(note.id, updates)}
-        />
+        <MeetingFields note={note} isOwner={isOwner} onUpdate={(updates) => onUpdate(note.id, updates)} />
       )}
 
       {isOwner ? (
@@ -92,12 +82,12 @@ export function NoteEditor({ note, projects, isOwner, onUpdate, onConvertLineToT
           value={note.body}
           onChange={(e) => onUpdate(note.id, { body: e.target.value })}
           placeholder="Start writing... (supports **bold**, *italic*, - lists)"
-          className="w-full min-h-[300px] bg-zinc-800/30 border border-zinc-800 rounded-lg p-4 text-sm text-zinc-200 placeholder-zinc-600 outline-none resize-y focus:border-zinc-700 leading-relaxed"
+          className="w-full min-h-[300px] bg-[#f8f9fc] border border-[#e2e5ef] rounded-xl p-4 text-sm text-[#1a1d2e] placeholder-[#9ca3c4] outline-none resize-y focus:border-[#6c5ce7] leading-relaxed"
         />
       ) : (
         <div
-          className="w-full min-h-[300px] bg-zinc-800/30 border border-zinc-800 rounded-lg p-4 text-sm text-zinc-200 leading-relaxed"
-          dangerouslySetInnerHTML={{ __html: renderBody(note.body) || '<span class="text-zinc-600">No content</span>' }}
+          className="w-full min-h-[300px] bg-[#f8f9fc] border border-[#e2e5ef] rounded-xl p-4 text-sm text-[#1a1d2e] leading-relaxed"
+          dangerouslySetInnerHTML={{ __html: renderBody(note.body) || '<span class="text-[#9ca3c4]">No content</span>' }}
         />
       )}
     </div>

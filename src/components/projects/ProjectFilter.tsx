@@ -16,15 +16,15 @@ const options: { value: FilterOption; label: string }[] = [
 
 export function ProjectFilter({ active, onChange }: ProjectFilterProps) {
   return (
-    <div className="flex items-center gap-1 bg-zinc-800 rounded-lg p-1">
+    <div className="flex items-center gap-1 bg-[#f8f9fc] rounded-xl p-1 border border-[#eef0f6]">
       {options.map((opt) => (
         <button
           key={opt.value}
           onClick={() => onChange(opt.value)}
-          className={`px-3 py-1.5 rounded-md text-xs font-medium transition-colors duration-150 ${
+          className={`px-3.5 py-2 rounded-lg text-xs font-medium transition-all duration-200 ${
             active === opt.value
-              ? 'bg-zinc-700 text-zinc-100'
-              : 'text-zinc-500 hover:text-zinc-300'
+              ? 'bg-white text-[#1a1d2e] shadow-sm'
+              : 'text-[#6b7194] hover:text-[#1a1d2e]'
           }`}
         >
           {opt.label}

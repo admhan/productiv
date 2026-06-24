@@ -1,4 +1,4 @@
-import { LayoutDashboard, FolderKanban, StickyNote, BookOpen, Settings, LogOut } from 'lucide-react';
+import { LayoutDashboard, FolderKanban, StickyNote, BookOpen, Settings, LogOut, Zap } from 'lucide-react';
 
 export type TabId = 'dashboard' | 'projects' | 'notes' | 'logbook' | 'settings';
 
@@ -21,11 +21,14 @@ export function Sidebar({ activeTab, onTabChange, isOwner, onLogout }: SidebarPr
   const visibleItems = navItems.filter((item) => !item.ownerOnly || isOwner);
 
   return (
-    <aside className="w-56 h-screen bg-zinc-900 border-r border-zinc-800 flex flex-col shrink-0">
-      <div className="p-5 border-b border-zinc-800">
-        <h1 className="text-lg font-bold bg-gradient-to-r from-indigo-400 to-violet-400 bg-clip-text text-transparent">
-          Productiv
-        </h1>
+    <aside className="w-60 h-screen bg-white/80 backdrop-blur-xl border-r border-[#e2e5ef] flex flex-col shrink-0">
+      <div className="p-5 border-b border-[#eef0f6]">
+        <div className="flex items-center gap-2.5">
+          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#6c5ce7] to-[#00cec9] flex items-center justify-center shadow-sm">
+            <Zap className="w-4 h-4 text-white" />
+          </div>
+          <h1 className="text-lg font-bold text-[#1a1d2e]">Productiv</h1>
+        </div>
       </div>
 
       <nav className="flex-1 py-4 px-3 space-y-1">
@@ -36,25 +39,25 @@ export function Sidebar({ activeTab, onTabChange, isOwner, onLogout }: SidebarPr
             <button
               key={item.id}
               onClick={() => onTabChange(item.id)}
-              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors duration-150 ${
+              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 ${
                 active
-                  ? 'bg-indigo-500/10 text-indigo-400'
-                  : 'text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800'
+                  ? 'bg-gradient-to-r from-[#6c5ce7]/10 to-[#6c5ce7]/5 text-[#6c5ce7] shadow-sm'
+                  : 'text-[#6b7194] hover:text-[#1a1d2e] hover:bg-[#f8f9fc]'
               }`}
             >
-              <Icon className="w-4 h-4" />
+              <Icon className="w-[18px] h-[18px]" />
               {item.label}
             </button>
           );
         })}
       </nav>
 
-      <div className="p-3 border-t border-zinc-800">
+      <div className="p-3 border-t border-[#eef0f6]">
         <button
           onClick={onLogout}
-          className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-zinc-500 hover:text-red-400 hover:bg-zinc-800 transition-colors duration-150"
+          className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-[#9ca3c4] hover:text-[#ff6b6b] hover:bg-[#fff5f5] transition-all duration-200"
         >
-          <LogOut className="w-4 h-4" />
+          <LogOut className="w-[18px] h-[18px]" />
           Sign Out
         </button>
       </div>

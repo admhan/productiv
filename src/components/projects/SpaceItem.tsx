@@ -17,16 +17,8 @@ interface SpaceItemProps {
 }
 
 export function SpaceItem({
-  space,
-  projects,
-  tasks,
-  isOwner,
-  statusFilter,
-  onAddProject,
-  onUpdateProject,
-  onDeleteProject,
-  onRenameSpace,
-  onDeleteSpace,
+  space, projects, tasks, isOwner, statusFilter,
+  onAddProject, onUpdateProject, onDeleteProject, onRenameSpace, onDeleteSpace,
 }: SpaceItemProps) {
   const [expanded, setExpanded] = useState(true);
   const [showMenu, setShowMenu] = useState(false);
@@ -52,9 +44,9 @@ export function SpaceItem({
   };
 
   return (
-    <div className="bg-zinc-900 rounded-xl border border-zinc-800 overflow-hidden">
-      <div className="flex items-center gap-2 px-4 py-3 group">
-        <button onClick={() => setExpanded(!expanded)} className="text-zinc-500 hover:text-zinc-300">
+    <div className="card overflow-hidden">
+      <div className="flex items-center gap-2 px-4 py-3.5 group">
+        <button onClick={() => setExpanded(!expanded)} className="text-[#9ca3c4] hover:text-[#1a1d2e] transition-colors">
           {expanded ? <ChevronDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
         </button>
 
@@ -64,20 +56,20 @@ export function SpaceItem({
             onChange={(e) => setSpaceName(e.target.value)}
             onBlur={handleRename}
             onKeyDown={(e) => e.key === 'Enter' && handleRename()}
-            className="flex-1 bg-transparent text-sm font-semibold text-zinc-100 outline-none border-b border-indigo-500"
+            className="flex-1 bg-transparent text-sm font-semibold text-[#1a1d2e] outline-none border-b-2 border-[#6c5ce7]"
             autoFocus
           />
         ) : (
-          <span className="flex-1 text-sm font-semibold text-zinc-200">{space.name}</span>
+          <span className="flex-1 text-sm font-semibold text-[#1a1d2e]">{space.name}</span>
         )}
 
-        <span className="text-xs text-zinc-600">{filtered.length} projects</span>
+        <span className="text-xs text-[#9ca3c4] font-medium">{filtered.length} projects</span>
 
         {isOwner && (
           <>
             <button
               onClick={() => setAdding(true)}
-              className="opacity-0 group-hover:opacity-100 text-zinc-500 hover:text-indigo-400 p-1 transition-all"
+              className="opacity-0 group-hover:opacity-100 text-[#9ca3c4] hover:text-[#6c5ce7] p-1 transition-all rounded-lg hover:bg-[#6c5ce7]/8"
               title="Add project"
             >
               <Plus className="w-4 h-4" />
@@ -85,21 +77,21 @@ export function SpaceItem({
             <div className="relative">
               <button
                 onClick={() => setShowMenu(!showMenu)}
-                className="opacity-0 group-hover:opacity-100 text-zinc-500 hover:text-zinc-300 p-1 transition-all"
+                className="opacity-0 group-hover:opacity-100 text-[#9ca3c4] hover:text-[#6b7194] p-1 transition-all"
               >
                 <MoreHorizontal className="w-4 h-4" />
               </button>
               {showMenu && (
-                <div className="absolute right-0 top-full mt-1 bg-zinc-800 border border-zinc-700 rounded-lg shadow-xl py-1 z-20 min-w-[120px]">
+                <div className="absolute right-0 top-full mt-1 bg-white border border-[#e2e5ef] rounded-xl shadow-lg py-1 z-20 min-w-[120px]">
                   <button
                     onClick={() => { setEditing(true); setShowMenu(false); }}
-                    className="w-full text-left px-3 py-1.5 text-xs text-zinc-300 hover:bg-zinc-700 flex items-center gap-2"
+                    className="w-full text-left px-3 py-1.5 text-xs text-[#1a1d2e] hover:bg-[#f8f9fc] flex items-center gap-2"
                   >
                     <Pencil className="w-3 h-3" /> Rename
                   </button>
                   <button
                     onClick={() => { onDeleteSpace(space.id); setShowMenu(false); }}
-                    className="w-full text-left px-3 py-1.5 text-xs text-red-400 hover:bg-zinc-700 flex items-center gap-2"
+                    className="w-full text-left px-3 py-1.5 text-xs text-[#ff6b6b] hover:bg-[#fff5f5] flex items-center gap-2"
                   >
                     <Trash2 className="w-3 h-3" /> Delete
                   </button>
@@ -119,37 +111,20 @@ export function SpaceItem({
                 onChange={(e) => setNewName(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleAddProject()}
                 placeholder="Project name..."
-                className="flex-1 px-3 py-1.5 bg-zinc-800 border border-zinc-700 rounded-lg text-sm text-zinc-100 placeholder-zinc-600 outline-none focus:border-indigo-500"
+                className="flex-1 px-3.5 py-2 bg-[#f8f9fc] border border-[#e2e5ef] rounded-xl text-sm text-[#1a1d2e] placeholder-[#9ca3c4] outline-none focus:border-[#6c5ce7]"
                 autoFocus
               />
-              <button
-                onClick={handleAddProject}
-                className="px-3 py-1.5 bg-indigo-500 hover:bg-indigo-600 text-white text-xs rounded-lg transition-colors"
-              >
+              <button onClick={handleAddProject} className="px-3.5 py-2 bg-[#6c5ce7] hover:bg-[#5a4bd6] text-white text-xs rounded-xl transition-colors font-medium">
                 Add
               </button>
-              <button
-                onClick={() => { setAdding(false); setNewName(''); }}
-                className="px-3 py-1.5 bg-zinc-800 text-zinc-400 text-xs rounded-lg hover:bg-zinc-700"
-              >
+              <button onClick={() => { setAdding(false); setNewName(''); }} className="px-3.5 py-2 bg-[#f8f9fc] text-[#6b7194] text-xs rounded-xl hover:bg-[#f1f3f9]">
                 Cancel
               </button>
             </div>
           )}
-
-          {filtered.length === 0 && (
-            <p className="px-4 py-3 text-xs text-zinc-600">No projects</p>
-          )}
-
+          {filtered.length === 0 && <p className="px-4 py-3 text-xs text-[#9ca3c4]">No projects</p>}
           {filtered.map((project) => (
-            <ProjectItem
-              key={project.id}
-              project={project}
-              tasks={tasks}
-              isOwner={isOwner}
-              onUpdate={onUpdateProject}
-              onDelete={onDeleteProject}
-            />
+            <ProjectItem key={project.id} project={project} tasks={tasks} isOwner={isOwner} onUpdate={onUpdateProject} onDelete={onDeleteProject} />
           ))}
         </div>
       )}

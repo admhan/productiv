@@ -1,29 +1,53 @@
 @import "tailwindcss";
 
 @theme {
-  --color-zinc-950: #09090b;
-  --color-zinc-900: #18181b;
-  --color-zinc-800: #27272a;
-  --color-zinc-700: #3f3f46;
-  --color-zinc-600: #52525b;
-  --color-zinc-500: #71717a;
-  --color-zinc-400: #a1a1aa;
-  --color-zinc-300: #d4d4d8;
-  --color-zinc-200: #e4e4e7;
-  --color-zinc-100: #f4f4f5;
-  --color-indigo-500: #6366f1;
-  --color-indigo-600: #4f46e5;
-  --color-indigo-400: #818cf8;
-  --color-violet-500: #8b5cf6;
-  --color-violet-400: #a78bfa;
-  --color-red-500: #ef4444;
-  --color-red-400: #f87171;
-  --color-green-500: #22c55e;
-  --color-green-400: #4ade80;
-  --color-amber-500: #f59e0b;
-  --color-amber-400: #fbbf24;
-  --color-blue-500: #3b82f6;
-  --color-blue-400: #60a5fa;
+  --color-surface: #f8f9fc;
+  --color-surface-alt: #ffffff;
+  --color-surface-hover: #f1f3f9;
+  --color-surface-glass: rgba(255, 255, 255, 0.72);
+  --color-border: #e2e5ef;
+  --color-border-light: #eef0f6;
+  --color-text: #1a1d2e;
+  --color-text-secondary: #6b7194;
+  --color-text-muted: #9ca3c4;
+  --color-primary: #6c5ce7;
+  --color-primary-hover: #5a4bd6;
+  --color-primary-light: rgba(108, 92, 231, 0.08);
+  --color-primary-medium: rgba(108, 92, 231, 0.15);
+  --color-accent: #00cec9;
+  --color-accent-light: rgba(0, 206, 201, 0.10);
+  --color-red: #ff6b6b;
+  --color-red-light: rgba(255, 107, 107, 0.10);
+  --color-green: #00b894;
+  --color-green-light: rgba(0, 184, 148, 0.10);
+  --color-amber: #fdcb6e;
+  --color-amber-light: rgba(253, 203, 110, 0.12);
+  --color-blue: #74b9ff;
+  --color-blue-light: rgba(116, 185, 255, 0.10);
+
+  --color-zinc-950: var(--color-text);
+  --color-zinc-900: var(--color-surface-alt);
+  --color-zinc-800: var(--color-border);
+  --color-zinc-700: var(--color-border);
+  --color-zinc-600: var(--color-text-muted);
+  --color-zinc-500: var(--color-text-secondary);
+  --color-zinc-400: var(--color-text-secondary);
+  --color-zinc-300: var(--color-text-secondary);
+  --color-zinc-200: var(--color-border-light);
+  --color-zinc-100: var(--color-text);
+  --color-indigo-500: var(--color-primary);
+  --color-indigo-600: var(--color-primary-hover);
+  --color-indigo-400: var(--color-primary);
+  --color-violet-500: #a55eea;
+  --color-violet-400: #a55eea;
+  --color-red-500: var(--color-red);
+  --color-red-400: var(--color-red);
+  --color-green-500: var(--color-green);
+  --color-green-400: var(--color-green);
+  --color-amber-500: #e17055;
+  --color-amber-400: #e17055;
+  --color-blue-500: #0984e3;
+  --color-blue-400: #74b9ff;
 }
 
 * {
@@ -33,26 +57,49 @@
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  background-color: var(--color-zinc-950);
-  color: var(--color-zinc-100);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: linear-gradient(135deg, #f0e6ff 0%, #e8f0fe 30%, #f8f9fc 60%, #fef0f0 100%);
+  background-attachment: fixed;
+  color: var(--color-text);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
 }
 
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 5px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--color-zinc-900);
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-zinc-700);
-  border-radius: 3px;
+  background: var(--color-border);
+  border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-zinc-600);
+  background: var(--color-text-muted);
+}
+
+@layer utilities {
+  .glass {
+    background: var(--color-surface-glass);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+  .card {
+    background: var(--color-surface-alt);
+    border: 1px solid var(--color-border-light);
+    border-radius: 16px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 12px rgba(0, 0, 0, 0.02);
+  }
+  .card-hover {
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .card-hover:hover {
+    box-shadow: 0 2px 8px rgba(108, 92, 231, 0.08), 0 8px 24px rgba(0, 0, 0, 0.04);
+    transform: translateY(-1px);
+  }
 }

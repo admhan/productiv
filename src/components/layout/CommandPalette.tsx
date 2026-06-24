@@ -82,29 +82,29 @@ export function CommandPalette({ open, onClose, data, isOwner, onAddInboxItem, o
 
   return (
     <div className="fixed inset-0 z-50 flex items-start justify-center pt-[20vh]" onClick={onClose}>
-      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
+      <div className="absolute inset-0 bg-[#1a1d2e]/30 backdrop-blur-sm" />
       <div
-        className="relative w-full max-w-lg bg-zinc-900 border border-zinc-800 rounded-xl shadow-2xl overflow-hidden"
+        className="relative w-full max-w-lg bg-white border border-[#e2e5ef] rounded-2xl shadow-2xl shadow-[#6c5ce7]/10 overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex items-center gap-3 px-4 border-b border-zinc-800">
-          <Search className="w-4 h-4 text-zinc-500" />
+        <div className="flex items-center gap-3 px-4 border-b border-[#eef0f6]">
+          <Search className="w-4 h-4 text-[#9ca3c4]" />
           <input
             ref={inputRef}
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder={isOwner ? 'Search or type to capture to inbox...' : 'Search...'}
-            className="flex-1 py-3 bg-transparent text-zinc-100 placeholder-zinc-600 outline-none text-sm"
+            className="flex-1 py-3.5 bg-transparent text-[#1a1d2e] placeholder-[#9ca3c4] outline-none text-sm"
           />
-          <button onClick={onClose} className="text-zinc-500 hover:text-zinc-300 transition-colors">
+          <button onClick={onClose} className="text-[#9ca3c4] hover:text-[#6b7194] transition-colors">
             <X className="w-4 h-4" />
           </button>
         </div>
 
         <div className="max-h-64 overflow-y-auto py-2">
           {results.length === 0 && q && (
-            <div className="px-4 py-6 text-center text-zinc-500 text-sm">
+            <div className="px-4 py-6 text-center text-[#9ca3c4] text-sm">
               {isOwner ? 'Press Enter to capture to inbox' : 'No results found'}
             </div>
           )}
@@ -112,21 +112,21 @@ export function CommandPalette({ open, onClose, data, isOwner, onAddInboxItem, o
             <button
               key={i}
               onClick={() => handleResultClick(r)}
-              className="w-full text-left px-4 py-2.5 hover:bg-zinc-800 transition-colors duration-100 flex items-center gap-3"
+              className="w-full text-left px-4 py-2.5 hover:bg-[#f8f9fc] transition-colors duration-100 flex items-center gap-3"
             >
-              <span className="text-[10px] uppercase tracking-wider text-zinc-600 w-14 shrink-0">
+              <span className="text-[10px] uppercase tracking-wider text-[#9ca3c4] font-semibold w-14 shrink-0">
                 {r.type === 'action' ? 'nav' : r.type}
               </span>
-              <span className="text-sm text-zinc-300 truncate">
+              <span className="text-sm text-[#1a1d2e] truncate">
                 {r.type === 'action' ? r.label : r.type === 'task' ? r.item.title : r.type === 'note' ? r.item.title : r.type === 'project' ? r.item.name : r.item.text}
               </span>
             </button>
           ))}
         </div>
 
-        <div className="px-4 py-2 border-t border-zinc-800 text-[11px] text-zinc-600 flex gap-4">
-          <span><kbd className="text-zinc-500">↵</kbd> {isOwner ? 'capture' : 'select'}</span>
-          <span><kbd className="text-zinc-500">esc</kbd> close</span>
+        <div className="px-4 py-2 border-t border-[#eef0f6] text-[11px] text-[#9ca3c4] flex gap-4">
+          <span><kbd className="text-[#6b7194] bg-[#f8f9fc] px-1 rounded">↵</kbd> {isOwner ? 'capture' : 'select'}</span>
+          <span><kbd className="text-[#6b7194] bg-[#f8f9fc] px-1 rounded">esc</kbd> close</span>
         </div>
       </div>
     </div>

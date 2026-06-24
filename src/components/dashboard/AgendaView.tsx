@@ -51,29 +51,29 @@ export function AgendaView({ isOwner }: AgendaViewProps) {
   };
 
   return (
-    <div className="bg-zinc-900 rounded-xl border border-zinc-800 p-4">
+    <div className="card p-5">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-sm font-semibold text-zinc-300">Weekly Agenda</h3>
-        <div className="flex items-center gap-2">
+        <h3 className="text-sm font-semibold text-[#1a1d2e]">Weekly Agenda</h3>
+        <div className="flex items-center gap-1">
           {isOwner && (
             <button
               onClick={() => setShowImport(!showImport)}
-              className="text-zinc-500 hover:text-indigo-400 transition-colors p-1"
+              className="text-[#9ca3c4] hover:text-[#6c5ce7] transition-colors p-1.5 rounded-lg hover:bg-[#f8f9fc]"
               title="Import .ics"
             >
               <Upload className="w-4 h-4" />
             </button>
           )}
-          <button onClick={() => setWeekOffset((w) => w - 1)} className="text-zinc-500 hover:text-zinc-300 p-1">
+          <button onClick={() => setWeekOffset((w) => w - 1)} className="text-[#9ca3c4] hover:text-[#1a1d2e] p-1.5 rounded-lg hover:bg-[#f8f9fc]">
             <ChevronLeft className="w-4 h-4" />
           </button>
           <button
             onClick={() => setWeekOffset(0)}
-            className="text-xs text-zinc-500 hover:text-zinc-300 px-2"
+            className="text-xs text-[#6b7194] hover:text-[#1a1d2e] px-2 py-1 rounded-lg hover:bg-[#f8f9fc] font-medium"
           >
             Today
           </button>
-          <button onClick={() => setWeekOffset((w) => w + 1)} className="text-zinc-500 hover:text-zinc-300 p-1">
+          <button onClick={() => setWeekOffset((w) => w + 1)} className="text-[#9ca3c4] hover:text-[#1a1d2e] p-1.5 rounded-lg hover:bg-[#f8f9fc]">
             <ChevronRight className="w-4 h-4" />
           </button>
         </div>
@@ -85,11 +85,11 @@ export function AgendaView({ isOwner }: AgendaViewProps) {
             value={icsText}
             onChange={(e) => setIcsText(e.target.value)}
             placeholder="Paste .ics content here..."
-            className="w-full h-24 px-3 py-2 bg-zinc-800 border border-zinc-700 rounded-lg text-xs text-zinc-300 placeholder-zinc-600 outline-none focus:border-indigo-500 resize-none font-mono"
+            className="w-full h-24 px-3.5 py-2.5 bg-[#f8f9fc] border border-[#e2e5ef] rounded-xl text-xs text-[#1a1d2e] placeholder-[#9ca3c4] outline-none focus:border-[#6c5ce7] resize-none font-mono"
           />
           <button
             onClick={handleImport}
-            className="px-3 py-1.5 bg-indigo-500 hover:bg-indigo-600 text-white text-xs rounded-lg transition-colors"
+            className="px-3.5 py-2 bg-[#6c5ce7] hover:bg-[#5a4bd6] text-white text-xs rounded-xl transition-colors font-medium"
           >
             Import Events
           </button>
@@ -103,11 +103,11 @@ export function AgendaView({ isOwner }: AgendaViewProps) {
 
           return (
             <div key={i} className="min-h-[80px]">
-              <div className={`text-center mb-1 ${isToday ? 'text-indigo-400' : 'text-zinc-500'}`}>
-                <div className="text-[10px] uppercase">{dayLabels[i]}</div>
+              <div className={`text-center mb-1.5 ${isToday ? 'text-[#6c5ce7]' : 'text-[#9ca3c4]'}`}>
+                <div className="text-[10px] uppercase font-semibold">{dayLabels[i]}</div>
                 <div
                   className={`text-sm font-medium ${
-                    isToday ? 'bg-indigo-500 text-white w-7 h-7 rounded-full flex items-center justify-center mx-auto' : ''
+                    isToday ? 'bg-gradient-to-r from-[#6c5ce7] to-[#a55eea] text-white w-7 h-7 rounded-full flex items-center justify-center mx-auto' : ''
                   }`}
                 >
                   {day.getDate()}
@@ -117,7 +117,7 @@ export function AgendaView({ isOwner }: AgendaViewProps) {
                 {dayEvents.map((ev) => (
                   <div
                     key={ev.id}
-                    className="px-1.5 py-1 bg-indigo-500/10 border border-indigo-500/20 rounded text-[10px] text-indigo-300 truncate"
+                    className="px-1.5 py-1 bg-[#6c5ce7]/8 border border-[#6c5ce7]/15 rounded-lg text-[10px] text-[#6c5ce7] truncate font-medium"
                     title={`${ev.summary}\n${formatTime(ev.start)} - ${formatTime(ev.end)}`}
                   >
                     {ev.summary}

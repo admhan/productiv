@@ -29,15 +29,15 @@ export function TaskList({ tasks, projects, isOwner, onAdd, onToggle, onUpdate, 
   };
 
   return (
-    <div className="bg-zinc-900 rounded-xl border border-zinc-800 p-4">
+    <div className="card p-5">
       <div className="flex items-center justify-between mb-3">
-        <h3 className="text-sm font-semibold text-zinc-300">
-          Tasks <span className="text-zinc-600 font-normal">({activeTasks.length})</span>
+        <h3 className="text-sm font-semibold text-[#1a1d2e]">
+          Tasks <span className="text-[#9ca3c4] font-normal">({activeTasks.length})</span>
         </h3>
         {isOwner && (
           <button
             onClick={() => setShowAdd(!showAdd)}
-            className="text-zinc-500 hover:text-indigo-400 transition-colors"
+            className="text-[#9ca3c4] hover:text-[#6c5ce7] transition-colors"
           >
             <Plus className="w-4 h-4" />
           </button>
@@ -51,13 +51,13 @@ export function TaskList({ tasks, projects, isOwner, onAdd, onToggle, onUpdate, 
             onChange={(e) => setNewTitle(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && handleAdd()}
             placeholder="Task title..."
-            className="flex-1 px-3 py-2 bg-zinc-800 border border-zinc-700 rounded-lg text-sm text-zinc-100 placeholder-zinc-600 outline-none focus:border-indigo-500 transition-colors"
+            className="flex-1 px-3.5 py-2.5 bg-[#f8f9fc] border border-[#e2e5ef] rounded-xl text-sm text-[#1a1d2e] placeholder-[#9ca3c4] outline-none focus:border-[#6c5ce7] transition-colors"
             autoFocus
           />
           <select
             value={newPriority}
             onChange={(e) => setNewPriority(e.target.value as Priority)}
-            className="px-2 py-2 bg-zinc-800 border border-zinc-700 rounded-lg text-sm text-zinc-300 outline-none"
+            className="px-2 py-2.5 bg-[#f8f9fc] border border-[#e2e5ef] rounded-xl text-sm text-[#1a1d2e] outline-none"
           >
             <option value="high">High</option>
             <option value="medium">Medium</option>
@@ -65,7 +65,7 @@ export function TaskList({ tasks, projects, isOwner, onAdd, onToggle, onUpdate, 
           </select>
           <button
             onClick={handleAdd}
-            className="px-3 py-2 bg-indigo-500 hover:bg-indigo-600 text-white text-sm rounded-lg transition-colors"
+            className="px-4 py-2.5 bg-[#6c5ce7] hover:bg-[#5a4bd6] text-white text-sm rounded-xl transition-colors font-medium"
           >
             Add
           </button>
@@ -74,7 +74,7 @@ export function TaskList({ tasks, projects, isOwner, onAdd, onToggle, onUpdate, 
 
       <div className="space-y-0.5">
         {activeTasks.length === 0 && doneTasks.length === 0 && (
-          <p className="text-xs text-zinc-600 py-4 text-center">No tasks yet</p>
+          <p className="text-xs text-[#9ca3c4] py-4 text-center">No tasks yet</p>
         )}
         {activeTasks.map((task) => (
           <TaskItem
@@ -89,8 +89,8 @@ export function TaskList({ tasks, projects, isOwner, onAdd, onToggle, onUpdate, 
         ))}
         {doneTasks.length > 0 && (
           <>
-            <div className="pt-2 pb-1">
-              <span className="text-[10px] uppercase tracking-wider text-zinc-600">Completed ({doneTasks.length})</span>
+            <div className="pt-3 pb-1">
+              <span className="text-[10px] uppercase tracking-wider text-[#9ca3c4] font-semibold">Completed ({doneTasks.length})</span>
             </div>
             {doneTasks.slice(0, 5).map((task) => (
               <TaskItem

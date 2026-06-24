@@ -65,30 +65,36 @@ export function PomodoroTimer() {
   };
 
   return (
-    <div className="bg-zinc-900 rounded-xl border border-zinc-800 p-4">
-      <h3 className="text-sm font-semibold text-zinc-300 mb-4">
-        Pomodoro <span className={`text-xs font-normal ${isWork ? 'text-indigo-400' : 'text-green-400'}`}>({isWork ? 'Work' : 'Break'})</span>
+    <div className="card p-5">
+      <h3 className="text-sm font-semibold text-[#1a1d2e] mb-4">
+        Pomodoro <span className={`text-xs font-medium ${isWork ? 'text-[#6c5ce7]' : 'text-[#00b894]'}`}>({isWork ? 'Work' : 'Break'})</span>
       </h3>
 
       <div className="flex flex-col items-center">
         <div className="relative w-32 h-32 mb-4">
           <svg className="w-full h-full -rotate-90" viewBox="0 0 120 120">
-            <circle cx="60" cy="60" r={radius} fill="none" stroke="#27272a" strokeWidth="6" />
+            <circle cx="60" cy="60" r={radius} fill="none" stroke="#eef0f6" strokeWidth="6" />
             <circle
               cx="60"
               cy="60"
               r={radius}
               fill="none"
-              stroke={isWork ? '#6366f1' : '#22c55e'}
+              stroke={isWork ? 'url(#pomGradient)' : '#00b894'}
               strokeWidth="6"
               strokeLinecap="round"
               strokeDasharray={circumference}
               strokeDashoffset={offset}
               className="transition-all duration-1000 ease-linear"
             />
+            <defs>
+              <linearGradient id="pomGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#6c5ce7" />
+                <stop offset="100%" stopColor="#00cec9" />
+              </linearGradient>
+            </defs>
           </svg>
           <div className="absolute inset-0 flex items-center justify-center">
-            <span className="text-2xl font-mono font-bold text-zinc-100">
+            <span className="text-2xl font-mono font-bold text-[#1a1d2e]">
               {String(minutes).padStart(2, '0')}:{String(secs).padStart(2, '0')}
             </span>
           </div>
@@ -97,13 +103,13 @@ export function PomodoroTimer() {
         <div className="flex items-center gap-3">
           <button
             onClick={() => setRunning(!running)}
-            className="p-2.5 rounded-full bg-indigo-500 hover:bg-indigo-600 text-white transition-colors duration-150"
+            className="p-3 rounded-full bg-gradient-to-r from-[#6c5ce7] to-[#a55eea] hover:from-[#5a4bd6] hover:to-[#9645d9] text-white transition-all duration-200 shadow-md shadow-[#6c5ce7]/20 active:scale-95"
           >
             {running ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
           </button>
           <button
             onClick={reset}
-            className="p-2.5 rounded-full bg-zinc-800 hover:bg-zinc-700 text-zinc-400 transition-colors duration-150"
+            className="p-3 rounded-full bg-[#f8f9fc] hover:bg-[#f1f3f9] text-[#6b7194] transition-all duration-200"
           >
             <RotateCcw className="w-4 h-4" />
           </button>

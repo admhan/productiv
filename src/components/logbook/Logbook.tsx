@@ -17,24 +17,15 @@ export function Logbook({ data }: LogbookProps) {
 
   return (
     <div className="p-6 max-w-4xl mx-auto space-y-6">
-      <LogFilters
-        timeFilter={timeFilter}
-        projectFilter={projectFilter}
-        projects={data.projects}
-        onTimeChange={setTimeFilter}
-        onProjectChange={setProjectFilter}
-      />
+      <LogFilters timeFilter={timeFilter} projectFilter={projectFilter} projects={data.projects}
+        onTimeChange={setTimeFilter} onProjectChange={setProjectFilter} />
 
-      <div className="bg-zinc-900 rounded-xl border border-zinc-800 divide-y divide-zinc-800/50">
+      <div className="card divide-y divide-[#eef0f6]">
         {entries.length === 0 && (
-          <div className="text-center py-12 text-zinc-600 text-sm">No completed tasks</div>
+          <div className="text-center py-16 text-[#9ca3c4] text-sm">No completed tasks</div>
         )}
         {entries.map((task) => (
-          <LogEntry
-            key={task.id}
-            task={task}
-            project={data.projects.find((p) => p.id === task.projectId)}
-          />
+          <LogEntry key={task.id} task={task} project={data.projects.find((p) => p.id === task.projectId)} />
         ))}
       </div>
     </div>

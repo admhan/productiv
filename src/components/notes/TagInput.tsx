@@ -26,12 +26,12 @@ export function TagInput({ tags, onChange, disabled }: TagInputProps) {
   };
 
   return (
-    <div className="flex flex-wrap items-center gap-1.5 px-3 py-2 bg-zinc-800 border border-zinc-700 rounded-lg min-h-[38px]">
+    <div className="flex flex-wrap items-center gap-1.5 px-3.5 py-2.5 bg-[#f8f9fc] border border-[#e2e5ef] rounded-xl min-h-[38px]">
       {tags.map((tag) => (
-        <span key={tag} className="flex items-center gap-1 px-2 py-0.5 bg-indigo-500/15 text-indigo-400 text-xs rounded-full">
+        <span key={tag} className="flex items-center gap-1 px-2.5 py-0.5 bg-[#6c5ce7]/10 text-[#6c5ce7] text-xs rounded-full font-medium">
           {tag}
           {!disabled && (
-            <button onClick={() => onChange(tags.filter((t) => t !== tag))} className="hover:text-indigo-300">
+            <button onClick={() => onChange(tags.filter((t) => t !== tag))} className="hover:text-[#5a4bd6]">
               <X className="w-3 h-3" />
             </button>
           )}
@@ -43,7 +43,7 @@ export function TagInput({ tags, onChange, disabled }: TagInputProps) {
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
           placeholder={tags.length === 0 ? 'Add tags...' : ''}
-          className="flex-1 min-w-[60px] bg-transparent text-sm text-zinc-100 placeholder-zinc-600 outline-none"
+          className="flex-1 min-w-[60px] bg-transparent text-sm text-[#1a1d2e] placeholder-[#9ca3c4] outline-none"
         />
       )}
     </div>

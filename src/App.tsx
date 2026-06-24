@@ -76,7 +76,7 @@ export default function App() {
   }
 
   return (
-    <div className="flex h-screen bg-zinc-950 overflow-hidden">
+    <div className="flex h-screen overflow-hidden">
       <Sidebar activeTab={activeTab} onTabChange={setActiveTab} isOwner={isOwner} onLogout={logout} />
       <div className="flex-1 flex flex-col overflow-hidden">
         {!isOwner && <GuestBanner />}
