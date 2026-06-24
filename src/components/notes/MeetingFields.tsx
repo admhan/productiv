@@ -17,13 +17,16 @@ function ListField({ label, items, isOwner, onAdd, onRemove }: {
 
   return (
     <div>
-      <label className="text-xs font-semibold text-[#6b7194] uppercase tracking-wider">{label}</label>
+      <label className="text-[11px] font-semibold uppercase tracking-wider" style={{ color: 'var(--color-text-muted)' }}>{label}</label>
       <div className="mt-1.5 space-y-1">
         {items.map((item, i) => (
-          <div key={i} className="flex items-center gap-2 px-3 py-2 bg-[#f8f9fc] rounded-lg text-sm text-[#1a1d2e]">
+          <div key={i} className="flex items-center gap-2 px-3 py-2 rounded-md text-[13px]"
+            style={{ background: 'var(--color-bg-tertiary)', color: 'var(--color-text-primary)' }}>
             <span className="flex-1">{item}</span>
             {isOwner && (
-              <button onClick={() => onRemove(i)} className="text-[#9ca3c4] hover:text-[#ff6b6b]">
+              <button onClick={() => onRemove(i)} style={{ color: 'var(--color-text-muted)' }}
+                onMouseEnter={(e) => e.currentTarget.style.color = 'var(--color-danger)'}
+                onMouseLeave={(e) => e.currentTarget.style.color = 'var(--color-text-muted)'}>
                 <X className="w-3 h-3" />
               </button>
             )}
@@ -31,16 +34,15 @@ function ListField({ label, items, isOwner, onAdd, onRemove }: {
         ))}
         {isOwner && (
           <div className="flex gap-2">
-            <input
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
+            <input value={input} onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && handleAdd()}
               placeholder={`Add ${label.toLowerCase()}...`}
-              className="flex-1 px-3 py-2 bg-[#f8f9fc] border border-[#e2e5ef] rounded-lg text-xs text-[#1a1d2e] placeholder-[#9ca3c4] outline-none focus:border-[#6c5ce7]"
-            />
-            <button onClick={handleAdd} className="text-[#9ca3c4] hover:text-[#6c5ce7] p-1">
-              <Plus className="w-4 h-4" />
-            </button>
+              className="flex-1 px-3 py-2 rounded-md text-[12px] outline-none"
+              style={{ background: 'var(--color-bg-tertiary)', border: '1px solid var(--color-border)', color: 'var(--color-text-primary)' }} />
+            <button onClick={handleAdd} style={{ color: 'var(--color-text-muted)' }}
+              onMouseEnter={(e) => e.currentTarget.style.color = 'var(--color-accent)'}
+              onMouseLeave={(e) => e.currentTarget.style.color = 'var(--color-text-muted)'}
+              className="p-1"><Plus className="w-4 h-4" /></button>
           </div>
         )}
       </div>
@@ -50,17 +52,14 @@ function ListField({ label, items, isOwner, onAdd, onRemove }: {
 
 export function MeetingFields({ note, isOwner, onUpdate }: MeetingFieldsProps) {
   return (
-    <div className="space-y-4 p-4 bg-[#6c5ce7]/4 rounded-xl border border-[#6c5ce7]/10">
-      <h4 className="text-xs font-semibold text-[#6c5ce7] uppercase tracking-wider">Meeting Details</h4>
+    <div className="space-y-4 p-4 rounded-lg" style={{ background: 'var(--color-accent-muted)', border: '1px solid var(--color-accent-subtle)' }}>
+      <h4 className="text-[11px] font-semibold uppercase tracking-wider" style={{ color: 'var(--color-accent)' }}>Meeting Details</h4>
       <div>
-        <label className="text-xs font-semibold text-[#6b7194]">Date</label>
-        <input
-          type="date"
-          value={note.meetingDate ?? ''}
-          onChange={(e) => isOwner && onUpdate({ meetingDate: e.target.value })}
-          disabled={!isOwner}
-          className="mt-1 w-full px-3 py-2 bg-white border border-[#e2e5ef] rounded-lg text-sm text-[#1a1d2e] outline-none focus:border-[#6c5ce7] disabled:opacity-60"
-        />
+        <label className="text-[11px] font-semibold" style={{ color: 'var(--color-text-muted)' }}>Date</label>
+        <input type="date" value={note.meetingDate ?? ''}
+          onChange={(e) => isOwner && onUpdate({ meetingDate: e.target.value })} disabled={!isOwner}
+          className="mt-1 w-full px-3 py-2 rounded-md text-[13px] outline-none disabled:opacity-60"
+          style={{ background: 'var(--color-bg-tertiary)', border: '1px solid var(--color-border)', color: 'var(--color-text-primary)' }} />
       </div>
       <ListField label="Participants" items={note.participants} isOwner={isOwner}
         onAdd={(item) => onUpdate({ participants: [...note.participants, item] })}

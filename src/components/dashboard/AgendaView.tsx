@@ -51,29 +51,36 @@ export function AgendaView({ isOwner }: AgendaViewProps) {
   };
 
   return (
-    <div className="card p-5">
+    <div className="rounded-lg p-5" style={{ background: 'var(--color-bg-secondary)', border: '1px solid var(--color-border)' }}>
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-sm font-semibold text-[#1a1d2e]">Weekly Agenda</h3>
+        <h3 className="text-[13px] font-semibold" style={{ color: 'var(--color-text-primary)' }}>Weekly Agenda</h3>
         <div className="flex items-center gap-1">
           {isOwner && (
-            <button
-              onClick={() => setShowImport(!showImport)}
-              className="text-[#9ca3c4] hover:text-[#6c5ce7] transition-colors p-1.5 rounded-lg hover:bg-[#f8f9fc]"
-              title="Import .ics"
-            >
+            <button onClick={() => setShowImport(!showImport)} title="Import .ics"
+              style={{ color: 'var(--color-text-muted)' }}
+              onMouseEnter={(e) => e.currentTarget.style.color = 'var(--color-accent)'}
+              onMouseLeave={(e) => e.currentTarget.style.color = 'var(--color-text-muted)'}
+              className="p-1.5 rounded-md transition-colors">
               <Upload className="w-4 h-4" />
             </button>
           )}
-          <button onClick={() => setWeekOffset((w) => w - 1)} className="text-[#9ca3c4] hover:text-[#1a1d2e] p-1.5 rounded-lg hover:bg-[#f8f9fc]">
+          <button onClick={() => setWeekOffset((w) => w - 1)} className="p-1.5 rounded-md"
+            style={{ color: 'var(--color-text-muted)' }}
+            onMouseEnter={(e) => e.currentTarget.style.color = 'var(--color-text-primary)'}
+            onMouseLeave={(e) => e.currentTarget.style.color = 'var(--color-text-muted)'}>
             <ChevronLeft className="w-4 h-4" />
           </button>
-          <button
-            onClick={() => setWeekOffset(0)}
-            className="text-xs text-[#6b7194] hover:text-[#1a1d2e] px-2 py-1 rounded-lg hover:bg-[#f8f9fc] font-medium"
-          >
+          <button onClick={() => setWeekOffset(0)}
+            className="text-[12px] px-2 py-1 rounded-md font-medium"
+            style={{ color: 'var(--color-text-secondary)' }}
+            onMouseEnter={(e) => e.currentTarget.style.color = 'var(--color-text-primary)'}
+            onMouseLeave={(e) => e.currentTarget.style.color = 'var(--color-text-secondary)'}>
             Today
           </button>
-          <button onClick={() => setWeekOffset((w) => w + 1)} className="text-[#9ca3c4] hover:text-[#1a1d2e] p-1.5 rounded-lg hover:bg-[#f8f9fc]">
+          <button onClick={() => setWeekOffset((w) => w + 1)} className="p-1.5 rounded-md"
+            style={{ color: 'var(--color-text-muted)' }}
+            onMouseEnter={(e) => e.currentTarget.style.color = 'var(--color-text-primary)'}
+            onMouseLeave={(e) => e.currentTarget.style.color = 'var(--color-text-muted)'}>
             <ChevronRight className="w-4 h-4" />
           </button>
         </div>
@@ -81,16 +88,13 @@ export function AgendaView({ isOwner }: AgendaViewProps) {
 
       {showImport && isOwner && (
         <div className="mb-4 space-y-2">
-          <textarea
-            value={icsText}
-            onChange={(e) => setIcsText(e.target.value)}
+          <textarea value={icsText} onChange={(e) => setIcsText(e.target.value)}
             placeholder="Paste .ics content here..."
-            className="w-full h-24 px-3.5 py-2.5 bg-[#f8f9fc] border border-[#e2e5ef] rounded-xl text-xs text-[#1a1d2e] placeholder-[#9ca3c4] outline-none focus:border-[#6c5ce7] resize-none font-mono"
-          />
-          <button
-            onClick={handleImport}
-            className="px-3.5 py-2 bg-[#6c5ce7] hover:bg-[#5a4bd6] text-white text-xs rounded-xl transition-colors font-medium"
-          >
+            className="w-full h-24 px-3 py-2 rounded-md text-[12px] outline-none resize-none font-mono"
+            style={{ background: 'var(--color-bg-tertiary)', border: '1px solid var(--color-border)', color: 'var(--color-text-primary)' }} />
+          <button onClick={handleImport}
+            className="px-3 py-1.5 rounded-md text-[12px] font-medium text-white"
+            style={{ background: 'var(--color-accent)' }}>
             Import Events
           </button>
         </div>
@@ -103,23 +107,19 @@ export function AgendaView({ isOwner }: AgendaViewProps) {
 
           return (
             <div key={i} className="min-h-[80px]">
-              <div className={`text-center mb-1.5 ${isToday ? 'text-[#6c5ce7]' : 'text-[#9ca3c4]'}`}>
+              <div className="text-center mb-1.5" style={{ color: isToday ? 'var(--color-accent)' : 'var(--color-text-muted)' }}>
                 <div className="text-[10px] uppercase font-semibold">{dayLabels[i]}</div>
-                <div
-                  className={`text-sm font-medium ${
-                    isToday ? 'bg-gradient-to-r from-[#6c5ce7] to-[#a55eea] text-white w-7 h-7 rounded-full flex items-center justify-center mx-auto' : ''
-                  }`}
-                >
+                <div className={`text-[13px] font-medium ${isToday ? 'text-white w-7 h-7 rounded-full flex items-center justify-center mx-auto' : ''}`}
+                  style={isToday ? { background: 'var(--color-accent)' } : {}}>
                   {day.getDate()}
                 </div>
               </div>
               <div className="space-y-0.5">
                 {dayEvents.map((ev) => (
-                  <div
-                    key={ev.id}
-                    className="px-1.5 py-1 bg-[#6c5ce7]/8 border border-[#6c5ce7]/15 rounded-lg text-[10px] text-[#6c5ce7] truncate font-medium"
-                    title={`${ev.summary}\n${formatTime(ev.start)} - ${formatTime(ev.end)}`}
-                  >
+                  <div key={ev.id}
+                    className="px-1.5 py-1 rounded text-[10px] truncate font-medium"
+                    style={{ background: 'var(--color-accent-subtle)', color: 'var(--color-accent)', border: '1px solid var(--color-accent-muted)' }}
+                    title={`${ev.summary}\n${formatTime(ev.start)} - ${formatTime(ev.end)}`}>
                     {ev.summary}
                   </div>
                 ))}

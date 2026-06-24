@@ -10,7 +10,7 @@ export function Settings({ onImport }: SettingsProps) {
   return (
     <div className="p-6 max-w-2xl mx-auto space-y-8">
       <DataManager onImport={onImport} />
-      <div className="border-t border-zinc-800 pt-8">
+      <div className="pt-8" style={{ borderTop: '1px solid var(--color-border)' }}>
         <ApiKeyField />
       </div>
     </div>

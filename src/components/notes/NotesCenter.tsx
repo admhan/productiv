@@ -36,26 +36,23 @@ export function NotesCenter({ data, isOwner, onAddNote, onUpdateNote, onDeleteNo
 
   return (
     <div className="flex h-full">
-      <div className="w-72 border-r border-[#eef0f6] bg-white/50 flex flex-col shrink-0">
-        <div className="p-3 space-y-2 border-b border-[#eef0f6]">
-          <div className="flex items-center gap-2 px-3 py-2 bg-[#f8f9fc] rounded-xl border border-[#eef0f6]">
-            <Search className="w-3.5 h-3.5 text-[#9ca3c4]" />
-            <input
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search notes..."
-              className="flex-1 bg-transparent text-sm text-[#1a1d2e] placeholder-[#9ca3c4] outline-none"
-            />
+      <div className="w-72 flex flex-col shrink-0" style={{ borderRight: '1px solid var(--color-border)', background: 'var(--color-bg-secondary)' }}>
+        <div className="p-3 space-y-2" style={{ borderBottom: '1px solid var(--color-border)' }}>
+          <div className="flex items-center gap-2 px-3 py-2 rounded-md"
+            style={{ background: 'var(--color-bg-tertiary)', border: '1px solid var(--color-border)' }}>
+            <Search className="w-3.5 h-3.5" style={{ color: 'var(--color-text-muted)' }} />
+            <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search notes..."
+              className="flex-1 bg-transparent text-[13px] outline-none"
+              style={{ color: 'var(--color-text-primary)' }} />
           </div>
-          <div className="flex gap-1 bg-[#f8f9fc] rounded-lg p-0.5">
+          <div className="flex gap-0.5 rounded-md p-0.5" style={{ background: 'var(--color-bg-tertiary)' }}>
             {(['all', 'note', 'meeting'] as const).map((t) => (
-              <button
-                key={t}
-                onClick={() => setTypeFilter(t)}
-                className={`flex-1 py-1.5 text-xs rounded-md font-medium transition-all ${
-                  typeFilter === t ? 'bg-white text-[#1a1d2e] shadow-sm' : 'text-[#6b7194] hover:text-[#1a1d2e]'
-                }`}
-              >
+              <button key={t} onClick={() => setTypeFilter(t)}
+                className="flex-1 py-1.5 text-[12px] rounded font-medium transition-colors"
+                style={{
+                  background: typeFilter === t ? 'var(--color-bg-hover)' : 'transparent',
+                  color: typeFilter === t ? 'var(--color-text-primary)' : 'var(--color-text-muted)',
+                }}>
                 {t === 'all' ? 'All' : t === 'note' ? 'Notes' : 'Meetings'}
               </button>
             ))}
@@ -63,24 +60,22 @@ export function NotesCenter({ data, isOwner, onAddNote, onUpdateNote, onDeleteNo
         </div>
 
         {isOwner && (
-          <div className="p-3 flex gap-2 border-b border-[#eef0f6]">
-            <button
-              onClick={() => handleCreate('note')}
-              className="flex-1 flex items-center justify-center gap-1 py-2.5 bg-[#6c5ce7]/8 hover:bg-[#6c5ce7]/15 text-[#6c5ce7] text-xs rounded-xl transition-colors font-medium"
-            >
+          <div className="p-3 flex gap-2" style={{ borderBottom: '1px solid var(--color-border)' }}>
+            <button onClick={() => handleCreate('note')}
+              className="flex-1 flex items-center justify-center gap-1 py-2 rounded-md text-[12px] font-medium transition-colors"
+              style={{ background: 'var(--color-accent-subtle)', color: 'var(--color-accent)' }}>
               <Plus className="w-3 h-3" /> Note
             </button>
-            <button
-              onClick={() => handleCreate('meeting')}
-              className="flex-1 flex items-center justify-center gap-1 py-2.5 bg-[#a55eea]/8 hover:bg-[#a55eea]/15 text-[#a55eea] text-xs rounded-xl transition-colors font-medium"
-            >
+            <button onClick={() => handleCreate('meeting')}
+              className="flex-1 flex items-center justify-center gap-1 py-2 rounded-md text-[12px] font-medium transition-colors"
+              style={{ background: 'var(--color-accent-subtle)', color: 'var(--color-accent)' }}>
               <Plus className="w-3 h-3" /> Meeting
             </button>
           </div>
         )}
 
         <div className="flex-1 overflow-y-auto p-2 space-y-1">
-          {filtered.length === 0 && <p className="text-xs text-[#9ca3c4] text-center py-8">No notes found</p>}
+          {filtered.length === 0 && <p className="text-[12px] text-center py-8" style={{ color: 'var(--color-text-muted)' }}>No notes found</p>}
           {filtered.map((note) => (
             <NoteCard key={note.id} note={note} isOwner={isOwner} isActive={note.id === selectedId}
               onClick={() => setSelectedId(note.id)} onDelete={onDeleteNote} />
@@ -92,7 +87,7 @@ export function NotesCenter({ data, isOwner, onAddNote, onUpdateNote, onDeleteNo
         <NoteEditor note={selectedNote} projects={data.projects} isOwner={isOwner}
           onUpdate={onUpdateNote} onConvertLineToTask={onConvertToTask} />
       ) : (
-        <div className="flex-1 flex items-center justify-center text-[#9ca3c4] text-sm">Select a note to view</div>
+        <div className="flex-1 flex items-center justify-center text-[13px]" style={{ color: 'var(--color-text-muted)' }}>Select a note to view</div>
       )}
     </div>
   );

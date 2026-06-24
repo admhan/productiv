@@ -11,25 +11,23 @@ interface LogFiltersProps {
 export function LogFilters({ timeFilter, projectFilter, projects, onTimeChange, onProjectChange }: LogFiltersProps) {
   return (
     <div className="flex items-center gap-4">
-      <div className="flex items-center gap-1 bg-[#f8f9fc] rounded-xl p-1 border border-[#eef0f6]">
+      <div className="flex items-center gap-0.5 rounded-md p-0.5"
+        style={{ background: 'var(--color-bg-tertiary)', border: '1px solid var(--color-border)' }}>
         {(['today', 'week', 'all'] as LogbookFilter[]).map((f) => (
-          <button
-            key={f}
-            onClick={() => onTimeChange(f)}
-            className={`px-3.5 py-2 rounded-lg text-xs font-medium transition-all duration-200 ${
-              timeFilter === f ? 'bg-white text-[#1a1d2e] shadow-sm' : 'text-[#6b7194] hover:text-[#1a1d2e]'
-            }`}
-          >
+          <button key={f} onClick={() => onTimeChange(f)}
+            className="px-3 py-1.5 rounded text-[12px] font-medium transition-colors"
+            style={{
+              background: timeFilter === f ? 'var(--color-bg-hover)' : 'transparent',
+              color: timeFilter === f ? 'var(--color-text-primary)' : 'var(--color-text-muted)',
+            }}>
             {f === 'today' ? 'Today' : f === 'week' ? 'This Week' : 'All Time'}
           </button>
         ))}
       </div>
 
-      <select
-        value={projectFilter ?? ''}
-        onChange={(e) => onProjectChange(e.target.value || null)}
-        className="px-3.5 py-2 bg-[#f8f9fc] border border-[#eef0f6] rounded-xl text-xs text-[#1a1d2e] outline-none"
-      >
+      <select value={projectFilter ?? ''} onChange={(e) => onProjectChange(e.target.value || null)}
+        className="px-3 py-1.5 rounded-md text-[12px] outline-none"
+        style={{ background: 'var(--color-bg-tertiary)', border: '1px solid var(--color-border)', color: 'var(--color-text-secondary)' }}>
         <option value="">All projects</option>
         {projects.map((p) => <option key={p.id} value={p.id}>{p.name}</option>)}
       </select>

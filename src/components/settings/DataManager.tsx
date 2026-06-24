@@ -42,33 +42,41 @@ export function DataManager({ onImport }: DataManagerProps) {
 
   return (
     <div className="space-y-4">
-      <h3 className="text-sm font-semibold text-[#1a1d2e]">Data Management</h3>
+      <h3 className="text-[13px] font-semibold" style={{ color: 'var(--color-text-primary)' }}>Data Management</h3>
       <div className="flex gap-3">
         <button onClick={handleExport}
-          className="flex items-center gap-2 px-4 py-2.5 bg-[#f8f9fc] hover:bg-[#f1f3f9] border border-[#e2e5ef] text-[#1a1d2e] text-sm rounded-xl transition-colors">
+          className="flex items-center gap-2 h-9 px-3 rounded-md text-[13px] transition-colors"
+          style={{ background: 'var(--color-bg-tertiary)', border: '1px solid var(--color-border)', color: 'var(--color-text-primary)' }}
+          onMouseEnter={(e) => e.currentTarget.style.background = 'var(--color-bg-hover)'}
+          onMouseLeave={(e) => e.currentTarget.style.background = 'var(--color-bg-tertiary)'}>
           <Download className="w-4 h-4" /> Export JSON
         </button>
         <button onClick={() => fileRef.current?.click()}
-          className="flex items-center gap-2 px-4 py-2.5 bg-[#f8f9fc] hover:bg-[#f1f3f9] border border-[#e2e5ef] text-[#1a1d2e] text-sm rounded-xl transition-colors">
+          className="flex items-center gap-2 h-9 px-3 rounded-md text-[13px] transition-colors"
+          style={{ background: 'var(--color-bg-tertiary)', border: '1px solid var(--color-border)', color: 'var(--color-text-primary)' }}
+          onMouseEnter={(e) => e.currentTarget.style.background = 'var(--color-bg-hover)'}
+          onMouseLeave={(e) => e.currentTarget.style.background = 'var(--color-bg-tertiary)'}>
           <Upload className="w-4 h-4" /> Import JSON
         </button>
         <input ref={fileRef} type="file" accept=".json" onChange={handleFileChange} className="hidden" />
       </div>
 
       {showConfirm && (
-        <div className="p-4 bg-[#ff6b6b]/8 border border-[#ff6b6b]/15 rounded-xl">
-          <div className="flex items-center gap-2 text-[#ff6b6b] mb-2">
+        <div className="p-4 rounded-lg" style={{ background: 'rgba(229, 72, 77, 0.08)', border: '1px solid rgba(229, 72, 77, 0.15)' }}>
+          <div className="flex items-center gap-2 mb-2" style={{ color: 'var(--color-danger)' }}>
             <AlertTriangle className="w-4 h-4" />
-            <span className="text-sm font-semibold">Confirm Import</span>
+            <span className="text-[13px] font-semibold">Confirm Import</span>
           </div>
-          <p className="text-xs text-[#6b7194] mb-3">This will replace all current data. This action cannot be undone.</p>
+          <p className="text-[12px] mb-3" style={{ color: 'var(--color-text-secondary)' }}>This will replace all current data. This action cannot be undone.</p>
           <div className="flex gap-2">
             <button onClick={confirmImport}
-              className="px-3.5 py-2 bg-[#ff6b6b] hover:bg-[#ee5a5a] text-white text-xs rounded-xl transition-colors font-medium">
+              className="h-9 px-3 rounded-md text-[13px] font-medium text-white transition-colors"
+              style={{ background: 'var(--color-danger)' }}>
               Replace All Data
             </button>
             <button onClick={() => { setShowConfirm(false); setPendingJson(null); }}
-              className="px-3.5 py-2 bg-[#f8f9fc] text-[#6b7194] text-xs rounded-xl hover:bg-[#f1f3f9]">
+              className="h-9 px-3 rounded-md text-[13px]"
+              style={{ background: 'var(--color-bg-tertiary)', color: 'var(--color-text-secondary)' }}>
               Cancel
             </button>
           </div>

@@ -1,4 +1,4 @@
-import { LayoutDashboard, FolderKanban, StickyNote, BookOpen, Settings, LogOut, Zap } from 'lucide-react';
+import { LayoutDashboard, FolderKanban, StickyNote, BookOpen, Settings, LogOut } from 'lucide-react';
 
 export type TabId = 'dashboard' | 'projects' | 'notes' | 'logbook' | 'settings';
 
@@ -18,47 +18,48 @@ const navItems: { id: TabId; label: string; icon: typeof LayoutDashboard; ownerO
 ];
 
 export function Sidebar({ activeTab, onTabChange, isOwner, onLogout }: SidebarProps) {
-  const visibleItems = navItems.filter((item) => !item.ownerOnly || isOwner);
-
   return (
-    <aside className="w-60 h-screen bg-white/80 backdrop-blur-xl border-r border-[#e2e5ef] flex flex-col shrink-0">
-      <div className="p-5 border-b border-[#eef0f6]">
-        <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#6c5ce7] to-[#00cec9] flex items-center justify-center shadow-sm">
-            <Zap className="w-4 h-4 text-white" />
-          </div>
-          <h1 className="text-lg font-bold text-[#1a1d2e]">Productiv</h1>
-        </div>
+    <aside
+      className="w-[220px] h-full flex flex-col shrink-0"
+      style={{ background: 'var(--color-bg-secondary)', borderRight: '1px solid var(--color-border)' }}
+    >
+      <div className="h-[52px] flex items-center px-5" style={{ borderBottom: '1px solid var(--color-border)' }}>
+        <span className="text-[15px] font-semibold" style={{ color: 'var(--color-text-primary)' }}>Productiv</span>
       </div>
 
-      <nav className="flex-1 py-4 px-3 space-y-1">
-        {visibleItems.map((item) => {
+      <nav className="flex-1 py-2 px-2 space-y-px">
+        {navItems.filter((item) => !item.ownerOnly || isOwner).map((item) => {
           const Icon = item.icon;
           const active = activeTab === item.id;
           return (
             <button
               key={item.id}
               onClick={() => onTabChange(item.id)}
-              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 ${
-                active
-                  ? 'bg-gradient-to-r from-[#6c5ce7]/10 to-[#6c5ce7]/5 text-[#6c5ce7] shadow-sm'
-                  : 'text-[#6b7194] hover:text-[#1a1d2e] hover:bg-[#f8f9fc]'
-              }`}
+              className="w-full flex items-center gap-2.5 h-8 px-2.5 rounded-md text-[13px] font-medium transition-colors"
+              style={{
+                background: active ? 'var(--color-bg-active)' : 'transparent',
+                color: active ? 'var(--color-text-primary)' : 'var(--color-text-secondary)',
+              }}
+              onMouseEnter={(e) => { if (!active) e.currentTarget.style.background = 'var(--color-bg-hover)'; }}
+              onMouseLeave={(e) => { if (!active) e.currentTarget.style.background = 'transparent'; }}
             >
-              <Icon className="w-[18px] h-[18px]" />
+              <Icon className="w-4 h-4" style={{ opacity: active ? 1 : 0.6 }} />
               {item.label}
             </button>
           );
         })}
       </nav>
 
-      <div className="p-3 border-t border-[#eef0f6]">
+      <div className="px-2 pb-3" style={{ borderTop: '1px solid var(--color-border)' }}>
         <button
           onClick={onLogout}
-          className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-[#9ca3c4] hover:text-[#ff6b6b] hover:bg-[#fff5f5] transition-all duration-200"
+          className="w-full flex items-center gap-2.5 h-8 px-2.5 rounded-md text-[13px] font-medium mt-2 transition-colors"
+          style={{ color: 'var(--color-text-muted)' }}
+          onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--color-danger)'; e.currentTarget.style.background = 'var(--color-danger-subtle)'; }}
+          onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--color-text-muted)'; e.currentTarget.style.background = 'transparent'; }}
         >
-          <LogOut className="w-[18px] h-[18px]" />
-          Sign Out
+          <LogOut className="w-4 h-4" />
+          Sign out
         </button>
       </div>
     </aside>

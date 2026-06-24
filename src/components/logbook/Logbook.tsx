@@ -20,12 +20,15 @@ export function Logbook({ data }: LogbookProps) {
       <LogFilters timeFilter={timeFilter} projectFilter={projectFilter} projects={data.projects}
         onTimeChange={setTimeFilter} onProjectChange={setProjectFilter} />
 
-      <div className="card divide-y divide-[#eef0f6]">
+      <div className="rounded-lg overflow-hidden" style={{ background: 'var(--color-bg-secondary)', border: '1px solid var(--color-border)' }}>
         {entries.length === 0 && (
-          <div className="text-center py-16 text-[#9ca3c4] text-sm">No completed tasks</div>
+          <div className="text-center py-16 text-[13px]" style={{ color: 'var(--color-text-muted)' }}>No completed tasks</div>
         )}
-        {entries.map((task) => (
-          <LogEntry key={task.id} task={task} project={data.projects.find((p) => p.id === task.projectId)} />
+        {entries.map((task, i) => (
+          <div key={task.id}>
+            {i > 0 && <div style={{ borderTop: '1px solid var(--color-border)' }} />}
+            <LogEntry task={task} project={data.projects.find((p) => p.id === task.projectId)} />
+          </div>
         ))}
       </div>
     </div>

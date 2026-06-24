@@ -1,4 +1,4 @@
-import { Search, Command } from 'lucide-react';
+import { Search } from 'lucide-react';
 import type { TabId } from './Sidebar';
 
 interface TopBarProps {
@@ -16,17 +16,23 @@ const titles: Record<TabId, string> = {
 
 export function TopBar({ activeTab, onOpenCommand }: TopBarProps) {
   return (
-    <header className="h-14 border-b border-[#eef0f6] bg-white/60 backdrop-blur-md flex items-center justify-between px-6 shrink-0">
-      <h2 className="text-lg font-semibold text-[#1a1d2e]">{titles[activeTab]}</h2>
+    <header
+      className="h-[52px] flex items-center justify-between px-6 shrink-0"
+      style={{ borderBottom: '1px solid var(--color-border)' }}
+    >
+      <h2 className="text-[14px] font-semibold" style={{ color: 'var(--color-text-primary)' }}>
+        {titles[activeTab]}
+      </h2>
       <button
         onClick={onOpenCommand}
-        className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#f8f9fc] hover:bg-[#f1f3f9] border border-[#e2e5ef] text-[#6b7194] text-sm transition-all duration-200 hover:shadow-sm"
+        className="flex items-center gap-2 h-8 px-3 rounded-md text-[12px] transition-colors"
+        style={{ background: 'var(--color-bg-tertiary)', color: 'var(--color-text-secondary)', border: '1px solid var(--color-border)' }}
+        onMouseEnter={(e) => e.currentTarget.style.background = 'var(--color-bg-hover)'}
+        onMouseLeave={(e) => e.currentTarget.style.background = 'var(--color-bg-tertiary)'}
       >
         <Search className="w-3.5 h-3.5" />
-        <span>Search</span>
-        <kbd className="flex items-center gap-0.5 text-xs text-[#9ca3c4] ml-2 bg-white px-1.5 py-0.5 rounded-md border border-[#e2e5ef]">
-          <Command className="w-3 h-3" />K
-        </kbd>
+        Search
+        <kbd className="text-[11px] ml-1.5 opacity-50">⌘K</kbd>
       </button>
     </header>
   );

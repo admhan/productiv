@@ -23,50 +23,41 @@ function renderBody(text: string): string {
 export function NoteEditor({ note, projects, isOwner, onUpdate, onConvertLineToTask }: NoteEditorProps) {
   const handleConvertLine = () => {
     const selection = window.getSelection()?.toString().trim();
-    if (selection) {
-      onConvertLineToTask(selection, 'medium', note.projectId);
-    }
+    if (selection) onConvertLineToTask(selection, 'medium', note.projectId);
   };
 
   return (
     <div className="flex-1 p-6 space-y-4 overflow-y-auto">
-      <input
-        value={note.title}
-        onChange={(e) => isOwner && onUpdate(note.id, { title: e.target.value })}
-        disabled={!isOwner}
-        className="w-full text-xl font-bold bg-transparent text-[#1a1d2e] outline-none disabled:cursor-default"
-        placeholder="Note title..."
-      />
+      <input value={note.title}
+        onChange={(e) => isOwner && onUpdate(note.id, { title: e.target.value })} disabled={!isOwner}
+        className="w-full text-xl font-bold bg-transparent outline-none disabled:cursor-default"
+        style={{ color: 'var(--color-text-primary)' }} placeholder="Note title..." />
 
-      <div className="flex items-center gap-4">
-        <select
-          value={note.projectId ?? ''}
-          onChange={(e) => isOwner && onUpdate(note.id, { projectId: e.target.value || null })}
-          disabled={!isOwner}
-          className="px-3 py-2 bg-[#f8f9fc] border border-[#e2e5ef] rounded-xl text-xs text-[#1a1d2e] outline-none disabled:opacity-60"
-        >
+      <div className="flex items-center gap-3">
+        <select value={note.projectId ?? ''}
+          onChange={(e) => isOwner && onUpdate(note.id, { projectId: e.target.value || null })} disabled={!isOwner}
+          className="px-3 py-2 rounded-md text-[12px] outline-none disabled:opacity-60"
+          style={{ background: 'var(--color-bg-tertiary)', border: '1px solid var(--color-border)', color: 'var(--color-text-secondary)' }}>
           <option value="">No project</option>
           {projects.map((p) => <option key={p.id} value={p.id}>{p.name}</option>)}
         </select>
 
-        <select
-          value={note.type}
-          onChange={(e) => isOwner && onUpdate(note.id, { type: e.target.value as 'note' | 'meeting' })}
-          disabled={!isOwner}
-          className="px-3 py-2 bg-[#f8f9fc] border border-[#e2e5ef] rounded-xl text-xs text-[#1a1d2e] outline-none disabled:opacity-60"
-        >
+        <select value={note.type}
+          onChange={(e) => isOwner && onUpdate(note.id, { type: e.target.value as 'note' | 'meeting' })} disabled={!isOwner}
+          className="px-3 py-2 rounded-md text-[12px] outline-none disabled:opacity-60"
+          style={{ background: 'var(--color-bg-tertiary)', border: '1px solid var(--color-border)', color: 'var(--color-text-secondary)' }}>
           <option value="note">Note</option>
           <option value="meeting">Meeting</option>
         </select>
 
         {isOwner && (
-          <button
-            onClick={handleConvertLine}
-            className="flex items-center gap-1 px-3 py-2 text-xs text-[#6b7194] hover:text-[#6c5ce7] bg-[#f8f9fc] rounded-xl transition-colors border border-[#e2e5ef]"
+          <button onClick={handleConvertLine}
+            className="flex items-center gap-1 px-3 py-2 text-[12px] rounded-md transition-colors"
+            style={{ background: 'var(--color-bg-tertiary)', border: '1px solid var(--color-border)', color: 'var(--color-text-secondary)' }}
             title="Select text in the body, then click to convert to task"
-          >
-            <ArrowRight className="w-3 h-3" />
-            Selection to task
+            onMouseEnter={(e) => e.currentTarget.style.color = 'var(--color-accent)'}
+            onMouseLeave={(e) => e.currentTarget.style.color = 'var(--color-text-secondary)'}>
+            <ArrowRight className="w-3 h-3" /> Selection to task
           </button>
         )}
       </div>
@@ -78,17 +69,14 @@ export function NoteEditor({ note, projects, isOwner, onUpdate, onConvertLineToT
       )}
 
       {isOwner ? (
-        <textarea
-          value={note.body}
-          onChange={(e) => onUpdate(note.id, { body: e.target.value })}
+        <textarea value={note.body} onChange={(e) => onUpdate(note.id, { body: e.target.value })}
           placeholder="Start writing... (supports **bold**, *italic*, - lists)"
-          className="w-full min-h-[300px] bg-[#f8f9fc] border border-[#e2e5ef] rounded-xl p-4 text-sm text-[#1a1d2e] placeholder-[#9ca3c4] outline-none resize-y focus:border-[#6c5ce7] leading-relaxed"
-        />
+          className="w-full min-h-[300px] rounded-md p-4 text-[13px] outline-none resize-y leading-relaxed"
+          style={{ background: 'var(--color-bg-tertiary)', border: '1px solid var(--color-border)', color: 'var(--color-text-primary)' }} />
       ) : (
-        <div
-          className="w-full min-h-[300px] bg-[#f8f9fc] border border-[#e2e5ef] rounded-xl p-4 text-sm text-[#1a1d2e] leading-relaxed"
-          dangerouslySetInnerHTML={{ __html: renderBody(note.body) || '<span class="text-[#9ca3c4]">No content</span>' }}
-        />
+        <div className="w-full min-h-[300px] rounded-md p-4 text-[13px] leading-relaxed"
+          style={{ background: 'var(--color-bg-tertiary)', border: '1px solid var(--color-border)', color: 'var(--color-text-primary)' }}
+          dangerouslySetInnerHTML={{ __html: renderBody(note.body) || '<span style="color:var(--color-text-muted)">No content</span>' }} />
       )}
     </div>
   );

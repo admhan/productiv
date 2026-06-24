@@ -17,28 +17,21 @@ export function TaskList({ tasks, projects, isOwner, onAdd, onToggle, onUpdate, 
   const [newTitle, setNewTitle] = useState('');
   const [newPriority, setNewPriority] = useState<Priority>('medium');
   const [showAdd, setShowAdd] = useState(false);
+  const active = tasks.filter((t) => !t.completed);
+  const done = tasks.filter((t) => t.completed);
 
-  const activeTasks = tasks.filter((t) => !t.completed);
-  const doneTasks = tasks.filter((t) => t.completed);
-
-  const handleAdd = () => {
-    if (!newTitle.trim()) return;
-    onAdd(newTitle.trim(), newPriority, null);
-    setNewTitle('');
-    setShowAdd(false);
-  };
+  const handleAdd = () => { if (!newTitle.trim()) return; onAdd(newTitle.trim(), newPriority, null); setNewTitle(''); setShowAdd(false); };
 
   return (
-    <div className="card p-5">
-      <div className="flex items-center justify-between mb-3">
-        <h3 className="text-sm font-semibold text-[#1a1d2e]">
-          Tasks <span className="text-[#9ca3c4] font-normal">({activeTasks.length})</span>
+    <div className="rounded-lg p-4" style={{ background: 'var(--color-bg-secondary)', border: '1px solid var(--color-border)' }}>
+      <div className="flex items-center justify-between mb-2">
+        <h3 className="text-[13px] font-semibold" style={{ color: 'var(--color-text-primary)' }}>
+          Tasks <span style={{ color: 'var(--color-text-muted)', fontWeight: 400 }}>({active.length})</span>
         </h3>
         {isOwner && (
-          <button
-            onClick={() => setShowAdd(!showAdd)}
-            className="text-[#9ca3c4] hover:text-[#6c5ce7] transition-colors"
-          >
+          <button onClick={() => setShowAdd(!showAdd)} style={{ color: 'var(--color-text-muted)' }}
+            onMouseEnter={(e) => e.currentTarget.style.color = 'var(--color-accent)'}
+            onMouseLeave={(e) => e.currentTarget.style.color = 'var(--color-text-muted)'}>
             <Plus className="w-4 h-4" />
           </button>
         )}
@@ -46,63 +39,31 @@ export function TaskList({ tasks, projects, isOwner, onAdd, onToggle, onUpdate, 
 
       {showAdd && isOwner && (
         <div className="flex gap-2 mb-3">
-          <input
-            value={newTitle}
-            onChange={(e) => setNewTitle(e.target.value)}
-            onKeyDown={(e) => e.key === 'Enter' && handleAdd()}
-            placeholder="Task title..."
-            className="flex-1 px-3.5 py-2.5 bg-[#f8f9fc] border border-[#e2e5ef] rounded-xl text-sm text-[#1a1d2e] placeholder-[#9ca3c4] outline-none focus:border-[#6c5ce7] transition-colors"
-            autoFocus
-          />
-          <select
-            value={newPriority}
-            onChange={(e) => setNewPriority(e.target.value as Priority)}
-            className="px-2 py-2.5 bg-[#f8f9fc] border border-[#e2e5ef] rounded-xl text-sm text-[#1a1d2e] outline-none"
-          >
-            <option value="high">High</option>
-            <option value="medium">Medium</option>
-            <option value="low">Low</option>
+          <input value={newTitle} onChange={(e) => setNewTitle(e.target.value)}
+            onKeyDown={(e) => e.key === 'Enter' && handleAdd()} placeholder="Task title…" autoFocus
+            className="flex-1 h-9 px-3 rounded-md text-[13px] outline-none"
+            style={{ background: 'var(--color-bg-tertiary)', border: '1px solid var(--color-border)', color: 'var(--color-text-primary)' }} />
+          <select value={newPriority} onChange={(e) => setNewPriority(e.target.value as Priority)}
+            className="h-9 px-2 rounded-md text-[12px] outline-none"
+            style={{ background: 'var(--color-bg-tertiary)', border: '1px solid var(--color-border)', color: 'var(--color-text-secondary)' }}>
+            <option value="high">High</option><option value="medium">Medium</option><option value="low">Low</option>
           </select>
-          <button
-            onClick={handleAdd}
-            className="px-4 py-2.5 bg-[#6c5ce7] hover:bg-[#5a4bd6] text-white text-sm rounded-xl transition-colors font-medium"
-          >
-            Add
-          </button>
+          <button onClick={handleAdd} className="h-9 px-3 rounded-md text-[13px] font-medium text-white"
+            style={{ background: 'var(--color-accent)' }}>Add</button>
         </div>
       )}
 
-      <div className="space-y-0.5">
-        {activeTasks.length === 0 && doneTasks.length === 0 && (
-          <p className="text-xs text-[#9ca3c4] py-4 text-center">No tasks yet</p>
+      <div>
+        {active.length === 0 && done.length === 0 && (
+          <p className="text-[12px] py-6 text-center" style={{ color: 'var(--color-text-muted)' }}>No tasks yet</p>
         )}
-        {activeTasks.map((task) => (
-          <TaskItem
-            key={task.id}
-            task={task}
-            projects={projects}
-            isOwner={isOwner}
-            onToggle={onToggle}
-            onUpdate={onUpdate}
-            onDelete={onDelete}
-          />
-        ))}
-        {doneTasks.length > 0 && (
+        {active.map((t) => <TaskItem key={t.id} task={t} projects={projects} isOwner={isOwner} onToggle={onToggle} onUpdate={onUpdate} onDelete={onDelete} />)}
+        {done.length > 0 && (
           <>
-            <div className="pt-3 pb-1">
-              <span className="text-[10px] uppercase tracking-wider text-[#9ca3c4] font-semibold">Completed ({doneTasks.length})</span>
+            <div className="mt-3 mb-1 px-2">
+              <span className="text-[11px] uppercase tracking-wider font-medium" style={{ color: 'var(--color-text-muted)' }}>Done ({done.length})</span>
             </div>
-            {doneTasks.slice(0, 5).map((task) => (
-              <TaskItem
-                key={task.id}
-                task={task}
-                projects={projects}
-                isOwner={isOwner}
-                onToggle={onToggle}
-                onUpdate={onUpdate}
-                onDelete={onDelete}
-              />
-            ))}
+            {done.slice(0, 5).map((t) => <TaskItem key={t.id} task={t} projects={projects} isOwner={isOwner} onToggle={onToggle} onUpdate={onUpdate} onDelete={onDelete} />)}
           </>
         )}
       </div>

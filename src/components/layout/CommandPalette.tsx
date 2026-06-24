@@ -23,110 +23,76 @@ export function CommandPalette({ open, onClose, data, isOwner, onAddInboxItem, o
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    if (open) {
-      setQuery('');
-      setTimeout(() => inputRef.current?.focus(), 50);
-    }
+    if (open) { setQuery(''); setTimeout(() => inputRef.current?.focus(), 50); }
   }, [open]);
 
   if (!open) return null;
 
   const q = query.toLowerCase().trim();
-
   const results: ResultItem[] = [];
 
   if (q) {
-    data.tasks
-      .filter((t) => t.title.toLowerCase().includes(q))
-      .slice(0, 5)
-      .forEach((item) => results.push({ type: 'task', item }));
-
-    data.notes
-      .filter((n) => n.title.toLowerCase().includes(q) || n.body.toLowerCase().includes(q))
-      .slice(0, 5)
-      .forEach((item) => results.push({ type: 'note', item }));
-
-    data.projects
-      .filter((p) => p.name.toLowerCase().includes(q))
-      .slice(0, 5)
-      .forEach((item) => results.push({ type: 'project', item }));
+    data.tasks.filter((t) => t.title.toLowerCase().includes(q)).slice(0, 5).forEach((item) => results.push({ type: 'task', item }));
+    data.notes.filter((n) => n.title.toLowerCase().includes(q) || n.body.toLowerCase().includes(q)).slice(0, 5).forEach((item) => results.push({ type: 'note', item }));
+    data.projects.filter((p) => p.name.toLowerCase().includes(q)).slice(0, 5).forEach((item) => results.push({ type: 'project', item }));
   } else {
     results.push(
       { type: 'action', label: 'Go to Dashboard', tab: 'dashboard' },
       { type: 'action', label: 'Go to Projects', tab: 'projects' },
       { type: 'action', label: 'Go to Notes', tab: 'notes' },
-      { type: 'action', label: 'Go to Logbook', tab: 'logbook' }
+      { type: 'action', label: 'Go to Logbook', tab: 'logbook' },
     );
   }
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Escape') onClose();
-    if (e.key === 'Enter' && q && isOwner) {
-      onAddInboxItem(q);
-      onClose();
-    }
+    if (e.key === 'Enter' && q && isOwner) { onAddInboxItem(q); onClose(); }
   };
 
-  const handleResultClick = (r: ResultItem) => {
-    if (r.type === 'action') {
-      onNavigate(r.tab);
-    } else if (r.type === 'task') {
-      onNavigate('dashboard');
-    } else if (r.type === 'note') {
-      onNavigate('notes');
-    } else if (r.type === 'project') {
-      onNavigate('projects');
-    }
+  const handleClick = (r: ResultItem) => {
+    onNavigate(r.type === 'action' ? r.tab : r.type === 'task' ? 'dashboard' : r.type === 'note' ? 'notes' : 'projects');
     onClose();
   };
 
   return (
     <div className="fixed inset-0 z-50 flex items-start justify-center pt-[20vh]" onClick={onClose}>
-      <div className="absolute inset-0 bg-[#1a1d2e]/30 backdrop-blur-sm" />
+      <div className="absolute inset-0" style={{ background: 'rgba(0,0,0,0.6)' }} />
       <div
-        className="relative w-full max-w-lg bg-white border border-[#e2e5ef] rounded-2xl shadow-2xl shadow-[#6c5ce7]/10 overflow-hidden"
+        className="relative w-full max-w-[480px] rounded-xl overflow-hidden"
+        style={{ background: 'var(--color-bg-secondary)', border: '1px solid var(--color-border-light)', boxShadow: '0 24px 48px rgba(0,0,0,0.4)' }}
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex items-center gap-3 px-4 border-b border-[#eef0f6]">
-          <Search className="w-4 h-4 text-[#9ca3c4]" />
+        <div className="flex items-center gap-3 px-4 h-11" style={{ borderBottom: '1px solid var(--color-border)' }}>
+          <Search className="w-4 h-4" style={{ color: 'var(--color-text-muted)' }} />
           <input
-            ref={inputRef}
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            onKeyDown={handleKeyDown}
-            placeholder={isOwner ? 'Search or type to capture to inbox...' : 'Search...'}
-            className="flex-1 py-3.5 bg-transparent text-[#1a1d2e] placeholder-[#9ca3c4] outline-none text-sm"
+            ref={inputRef} value={query} onChange={(e) => setQuery(e.target.value)} onKeyDown={handleKeyDown}
+            placeholder={isOwner ? 'Search or capture to inbox…' : 'Search…'}
+            className="flex-1 bg-transparent text-[13px] outline-none"
+            style={{ color: 'var(--color-text-primary)' }}
           />
-          <button onClick={onClose} className="text-[#9ca3c4] hover:text-[#6b7194] transition-colors">
-            <X className="w-4 h-4" />
-          </button>
+          <button onClick={onClose} style={{ color: 'var(--color-text-muted)' }}><X className="w-4 h-4" /></button>
         </div>
-
-        <div className="max-h-64 overflow-y-auto py-2">
+        <div className="max-h-[240px] overflow-y-auto py-1">
           {results.length === 0 && q && (
-            <div className="px-4 py-6 text-center text-[#9ca3c4] text-sm">
-              {isOwner ? 'Press Enter to capture to inbox' : 'No results found'}
+            <div className="px-4 py-6 text-center text-[13px]" style={{ color: 'var(--color-text-muted)' }}>
+              {isOwner ? 'Press Enter to capture to inbox' : 'No results'}
             </div>
           )}
           {results.map((r, i) => (
-            <button
-              key={i}
-              onClick={() => handleResultClick(r)}
-              className="w-full text-left px-4 py-2.5 hover:bg-[#f8f9fc] transition-colors duration-100 flex items-center gap-3"
+            <button key={i} onClick={() => handleClick(r)}
+              className="w-full text-left px-4 h-9 flex items-center gap-3 transition-colors"
+              style={{ color: 'var(--color-text-secondary)' }}
+              onMouseEnter={(e) => e.currentTarget.style.background = 'var(--color-bg-hover)'}
+              onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
             >
-              <span className="text-[10px] uppercase tracking-wider text-[#9ca3c4] font-semibold w-14 shrink-0">
+              <span className="text-[10px] uppercase tracking-wider w-12 shrink-0" style={{ color: 'var(--color-text-muted)' }}>
                 {r.type === 'action' ? 'nav' : r.type}
               </span>
-              <span className="text-sm text-[#1a1d2e] truncate">
+              <span className="text-[13px] truncate">
                 {r.type === 'action' ? r.label : r.type === 'task' ? r.item.title : r.type === 'note' ? r.item.title : r.type === 'project' ? r.item.name : r.item.text}
               </span>
             </button>
           ))}
-        </div>
-
-        <div className="px-4 py-2 border-t border-[#eef0f6] text-[11px] text-[#9ca3c4] flex gap-4">
-          <span><kbd className="text-[#6b7194] bg-[#f8f9fc] px-1 rounded">↵</kbd> {isOwner ? 'capture' : 'select'}</span>
-          <span><kbd className="text-[#6b7194] bg-[#f8f9fc] px-1 rounded">esc</kbd> close</span>
         </div>
       </div>
     </div>

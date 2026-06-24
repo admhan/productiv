@@ -65,52 +65,46 @@ export function PomodoroTimer() {
   };
 
   return (
-    <div className="card p-5">
-      <h3 className="text-sm font-semibold text-[#1a1d2e] mb-4">
-        Pomodoro <span className={`text-xs font-medium ${isWork ? 'text-[#6c5ce7]' : 'text-[#00b894]'}`}>({isWork ? 'Work' : 'Break'})</span>
+    <div className="rounded-lg p-5" style={{ background: 'var(--color-bg-secondary)', border: '1px solid var(--color-border)' }}>
+      <h3 className="text-[13px] font-semibold mb-4" style={{ color: 'var(--color-text-primary)' }}>
+        Pomodoro{' '}
+        <span className="text-[12px] font-medium" style={{ color: isWork ? 'var(--color-accent)' : 'var(--color-success)' }}>
+          ({isWork ? 'Work' : 'Break'})
+        </span>
       </h3>
 
       <div className="flex flex-col items-center">
         <div className="relative w-32 h-32 mb-4">
           <svg className="w-full h-full -rotate-90" viewBox="0 0 120 120">
-            <circle cx="60" cy="60" r={radius} fill="none" stroke="#eef0f6" strokeWidth="6" />
+            <circle cx="60" cy="60" r={radius} fill="none" stroke="var(--color-bg-active)" strokeWidth="6" />
             <circle
-              cx="60"
-              cy="60"
-              r={radius}
-              fill="none"
-              stroke={isWork ? 'url(#pomGradient)' : '#00b894'}
-              strokeWidth="6"
-              strokeLinecap="round"
-              strokeDasharray={circumference}
-              strokeDashoffset={offset}
+              cx="60" cy="60" r={radius} fill="none"
+              stroke={isWork ? 'var(--color-accent)' : 'var(--color-success)'}
+              strokeWidth="6" strokeLinecap="round"
+              strokeDasharray={circumference} strokeDashoffset={offset}
               className="transition-all duration-1000 ease-linear"
             />
-            <defs>
-              <linearGradient id="pomGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#6c5ce7" />
-                <stop offset="100%" stopColor="#00cec9" />
-              </linearGradient>
-            </defs>
           </svg>
           <div className="absolute inset-0 flex items-center justify-center">
-            <span className="text-2xl font-mono font-bold text-[#1a1d2e]">
+            <span className="text-2xl font-mono font-bold" style={{ color: 'var(--color-text-primary)' }}>
               {String(minutes).padStart(2, '0')}:{String(secs).padStart(2, '0')}
             </span>
           </div>
         </div>
 
         <div className="flex items-center gap-3">
-          <button
-            onClick={() => setRunning(!running)}
-            className="p-3 rounded-full bg-gradient-to-r from-[#6c5ce7] to-[#a55eea] hover:from-[#5a4bd6] hover:to-[#9645d9] text-white transition-all duration-200 shadow-md shadow-[#6c5ce7]/20 active:scale-95"
-          >
+          <button onClick={() => setRunning(!running)}
+            className="p-3 rounded-full text-white transition-all active:scale-95"
+            style={{ background: 'var(--color-accent)' }}
+            onMouseEnter={(e) => e.currentTarget.style.background = 'var(--color-accent-hover)'}
+            onMouseLeave={(e) => e.currentTarget.style.background = 'var(--color-accent)'}>
             {running ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
           </button>
-          <button
-            onClick={reset}
-            className="p-3 rounded-full bg-[#f8f9fc] hover:bg-[#f1f3f9] text-[#6b7194] transition-all duration-200"
-          >
+          <button onClick={reset}
+            className="p-3 rounded-full transition-all"
+            style={{ background: 'var(--color-bg-tertiary)', color: 'var(--color-text-muted)' }}
+            onMouseEnter={(e) => e.currentTarget.style.background = 'var(--color-bg-hover)'}
+            onMouseLeave={(e) => e.currentTarget.style.background = 'var(--color-bg-tertiary)'}>
             <RotateCcw className="w-4 h-4" />
           </button>
         </div>
